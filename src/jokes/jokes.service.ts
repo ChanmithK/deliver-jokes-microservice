@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Jokes } from './entities/joke.entity';
@@ -28,4 +28,23 @@ export class JokesService {
       throw error;
     }
   }
+
+  async addJoke(joke: Jokes): Promise<Jokes> {
+    return this.jokesRepository.save(joke);
+  }
+
+  async deleteJoke(jokeId: string): Promise<void> {
+    const joke = await this.jokesRepository.findOne({
+      where: { jokeId: jokeId },
+    });
+    if (!joke) {
+      throw new NotFoundException(`Joke with ID ${jokeId} not found`);
+    }
+    await this.jokesRepository.remove(joke);
+  }
+
+  // async updateJoke(id: number, joke: Jokes): Promise<Jokes> {
+  //   await this.jokesRepository.update(id, joke);
+  //   return this.jokesRepository.findOne(id);
+  // }
 }
