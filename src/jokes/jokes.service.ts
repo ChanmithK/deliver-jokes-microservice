@@ -10,12 +10,21 @@ export class JokesService {
     private jokesRepository: Repository<Jokes>,
   ) {}
 
+  /**
+   * Get a random joke of a specific type.
+   * @param type Joke type to filter by.
+   * @returns A random joke.
+   */
   async getRandomJoke(type: string): Promise<Jokes> {
     const jokes = await this.jokesRepository.find({ where: { type } });
     const randomIndex = Math.floor(Math.random() * jokes.length);
     return jokes[randomIndex];
   }
 
+  /**
+   * Get all unique joke types.
+   * @returns An array of unique joke types.
+   */
   async getJokeTypes(): Promise<string[]> {
     try {
       const jokes = await this.jokesRepository.find();
@@ -29,10 +38,20 @@ export class JokesService {
     }
   }
 
+  /**
+   * Add a new joke.
+   * @param joke Joke data to add.
+   * @returns The added joke.
+   */
   async addJoke(joke: Jokes): Promise<Jokes> {
     return this.jokesRepository.save(joke);
   }
 
+  /**
+   * Delete a joke by ID.
+   * @param jokeId ID of the joke to delete.
+   * @throws NotFoundException if the joke is not found.
+   */
   async deleteJoke(jokeId: string): Promise<void> {
     const joke = await this.jokesRepository.findOne({
       where: { jokeId: jokeId },
