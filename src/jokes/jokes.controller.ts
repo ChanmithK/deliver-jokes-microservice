@@ -34,8 +34,4 @@ export class JokesController {
     console.log(jokeId);
     return this.jokesService.deleteJoke(jokeId);
   }
-  //   @Put('update/:id')
-  //   async updateJoke(@Param('id') id: number, @Body() joke: Jokes) {
-  //     return this.jokesService.updateJoke(id, joke);
-  //   }
 }

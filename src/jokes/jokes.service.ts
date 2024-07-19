@@ -42,9 +42,4 @@ export class JokesService {
     }
     await this.jokesRepository.remove(joke);
   }
-
-  // async updateJoke(id: number, joke: Jokes): Promise<Jokes> {
-  //   await this.jokesRepository.update(id, joke);
-  //   return this.jokesRepository.findOne(id);
-  // }
 }
